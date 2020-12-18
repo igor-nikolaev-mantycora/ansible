@@ -1,0 +1,57 @@
+---
+
+- hosts: localhost
+
+  collections:
+
+    - netapp.ontap
+
+  name: FlexVol Create
+
+  vars:
+
+    hostname: 192.168.10.110
+
+    username: "{{ ansible_env.ANSIBLE_NET_USERNAME }}"
+
+    state: present
+
+    password: "{{ ansible_env.ANSIBLE_NET_PASSWORD }}"
+
+    vserver: svm_Mikec_test
+
+    aggr: aggr1
+
+    vol_name: ansibleVol01
+
+  tasks:
+
+  - name: Volume Create
+
+    na_ontap_volume:
+
+      state: present
+
+      name: "{{ vol_name }}"
+
+      vserver: "{{ vserver }}"
+
+      aggregate_name: "{{ aggr }}"
+
+      size: 1
+
+      size_unit: gb
+
+      policy: default
+
+      junction_path: "/{{ vol_name }}"
+
+      hostname: "{{ hostname }}"
+
+      username: "{{ username }}"
+
+      password: "{{ password }}"
+
+      https: true
+
+      validate_certs: false
